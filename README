@@ -1,0 +1,9 @@
+"""
+本项目用于解决开关灯问题
+
+
+纯属娱乐
+"""
+init.lua # 写入nodemcu的程序，现主要功能:连接wifi，发送携带status及secret_key的请求，控制舵机
+
+
