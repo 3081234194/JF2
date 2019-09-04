@@ -6,4 +6,11 @@
 """
 init.lua # 写入nodemcu的程序，现主要功能:连接wifi，发送携带status及secret_key的请求，控制舵机
 
-
+项目结构:
+-----JF2
+-----|-----README 项目说明简介及结构介绍
+-----|-----init.lua nodemcu程序文件
+-----|-----py 存放python文件
+      -----|app.py 运行主要文件
+      -----|templates 渲染模板
+	   -----|index.html 控制页面
