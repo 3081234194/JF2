@@ -2,7 +2,14 @@
 --连接wifi
 --控制舵机
 --发送请求
+--发送状态
 pin = 13
+status = 0
+pmw.setup(pin, 50, 921)
+pmw.start(pin)
+tmr.delay(500)
+pmw.setup(pin, 50 ,947)
+pmw.start(pin)
 wifi.setmode(wifi.STATION)
 wifi.sta.config("账号","密码")
 wifi.sta.connect()
@@ -46,10 +53,12 @@ tmr.alarm(2,1000,1,function()
     --周期为1秒
     data = send_data()
     if (data==0) then
+       status = 0
        control_ser_low() 
        tmr.delay(500)
        control_ser_e()
     elseif(data==1) then
+	status = 1
 	control_ser_h()
 	tmr.delay(500)
 	vontrol_ser_e()
