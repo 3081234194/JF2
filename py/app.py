@@ -10,23 +10,31 @@
 last_action如果为0，则灯处于可开状态，反之
 commend 
 """
-from flask import Flask, render_template,url_for, rediect
+import datetime
+from flask import Flask, render_template,url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_object("config")
 db = SQLAlchemy(app)
 class Device(db.Model):
-    id = db.Column(db.Integer primary_key=True)
+    id = db.Column(db.Integer,primary_key=True)
     commend = db.Column(db.String(5), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now)
+    date = db.Column(db.DateTime)
+
+def create_db():
+    db.drop_all()
+    db.create_all()
+    user2 = Device(commend=1,date=datetime.datetime.now())
+    db.session.add(user2)
+    db.session.commit()
 @app.route("/")
 def index():
     #查询数据库中commend
-    list = Device.qiery.filter(Device.commend)
+    list = Device.query.filter(Device.commend)
     commend = list[-1]#获取最新的指令
     return render_template("index.html", commend=commend)
 
-@app.route("/ser/<status>")
+@app.route("/ser/<status>",methods=["POST","GET"])
 def ser(status):
     #查询数据库中commend
     list = Device.qiery.filter(Device.commend)
@@ -37,7 +45,9 @@ def ser(status):
         return commend
 @app.route("/server/<commend>")
 def server(commend):
-    user = Device(commend=commend)
+    user = Device(commend=commend,date=datetime.datetime.now()) 
     db.session.add(user)
     db.session.commit()
-    return rediect(url_for("/"))
+    return redirect("/")
+create_db()
+app.run(debug=True)

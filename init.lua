@@ -38,7 +38,7 @@ function control_ser_h()
 end
 function send_data()
     --发送数据函数
-    http.post('http://',
+    http.post('http://39.108.217.4/ser'..status,
    'Content-Type: application/json\r\n',
    '{"secret_key":"hello"}',
         function(code, data)
