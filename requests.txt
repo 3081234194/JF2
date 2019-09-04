@@ -1,1 +1,4 @@
-Flask: flask render_template 
+Flask: flask render_template,render_template,rendiectflask_sqlalchemy: SQLAlchemy
+
+install:
+ pymysql
