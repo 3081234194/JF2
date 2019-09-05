@@ -24,7 +24,7 @@ class Device(db.Model):
 def create_db():
     db.drop_all()
     db.create_all()
-    user2 = Device(commend=1,date=datetime.datetime.now())
+    user2 = Device(commend="off",date=datetime.datetime.now())
     db.session.add(user2)
     db.session.commit()
 @app.route("/")
@@ -43,7 +43,7 @@ def ser(status):
     if status==commend:
         return "ok"
     else:
-        return str(commend)
+        return commend
 @app.route("/server/<commend>")
 def server(commend):
     user = Device(commend=commend,date=datetime.datetime.now()) 
