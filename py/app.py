@@ -30,19 +30,20 @@ def create_db():
 @app.route("/")
 def index():
     #查询数据库中commend
-    list = Device.query.filter(Device.commend)
-    commend = list[-1]#获取最新的指令
+    cl = Device.query.order_by(Device.id.desc()).first()#获取最新的指令
+    commend = cl.commend
+    print(commend)
     return render_template("index.html", commend=commend)
 
 @app.route("/ser/<status>",methods=["POST","GET"])
 def ser(status):
     #查询数据库中commend
-    list = Device.qiery.filter(Device.commend)
-    commend = list[-1]#获取最新的指令
+    cl = Device.query.order_by(Device.id.desc()).first()#获取最新的指令
+    commend = cl.commend
     if status==commend:
         return "ok"
     else:
-        return commend
+        return str(commend)
 @app.route("/server/<commend>")
 def server(commend):
     user = Device(commend=commend,date=datetime.datetime.now()) 
@@ -50,4 +51,4 @@ def server(commend):
     db.session.commit()
     return redirect("/")
 create_db()
-app.run(debug=True,host="0.0.0.0",port=80)
+app.run(debug=True,host="0.0.0.0")
